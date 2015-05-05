@@ -27,8 +27,8 @@ var addthis_config = {
 
 <h2><a href="/images/{{image1.id}}">{{name1}}</a> vs. <a href="/images/{{image2.id}}">{{name2}}</a></h2>
 
-<div style="width:99%; margin-left:-15px;">
-     <ul id='collection-tabs' class='nav nav-tabs' style="padding-top:30px">
+<div style="width:99%; margin-left:-10px;">
+     <ul id='collection-tabs' class='nav nav-tabs' style="padding-top:50px; margin-left:15px; width:890px">
          <li>
            <a data-toggle='tab' href='#scatter'>Voxelwise</a>
          </li>
@@ -36,6 +36,7 @@ var addthis_config = {
            <a data-toggle='tab' href='#spatial'>Spatial</a>
          </li>
      </ul>
+</div>
      <div class='tab-content'>
 
             <!-- Scatterplot Comparison -->
@@ -72,5 +73,5 @@ var addthis_config = {
      <div style="width:90%; margin-left:42px;">
      <p><a href="/images/find_similar/{{image1.id}}">Back to Find Similar</a></p>
      </div>
-</div>
+
 {% endblock %}
