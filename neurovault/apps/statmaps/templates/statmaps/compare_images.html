@@ -10,23 +10,326 @@ var addthis_config = {
 {% endblock %}
 {% block content %}
 
-    {% if warnings %}
-       {% for warning in warnings %}
-        <div class="alert alert-danger" style="width:90%; margin-bottom:5px; margin-top:5px">{{ warning }}</div>   
-       {% endfor %}
-    {% endif %}
 
- {% autoescape off %}
-    {% for snippet in html %}
-       {{ snippet }}
-    {% endfor %}
- {% endautoescape %}
+<style>
 
-<div style="width:90%; margin-left:42px; margin-top:30px">
-    <h5>About</h5>
-    <div class="well">
-    Regional correlations are calculated from a brain-masked, 4mm transformation of the original image.  This visualization displays every 10th voxel for rendering purposes only.</div></div>
+#content {
+        padding: 0px
+}
+
+.container{
+	width:940px;
+	margin-left: auto;
+        margin-right: auto;
+	height:auto;
+}
+
+body{
+	padding:0;	
+	margin:0;	
+	width:100%;	
+	height:100%;
+	font-size:13px;
+	-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%;
+	line-height:1.5;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	height:auto;
+	color:#c5c5c5;
+}
+a img{
+	border:none;
+}
+img{
+	max-width:100%;
+}
+
+h1 {
+	font-weight:normal;
+	color:#5b5b5b;
+	margin:0 0 15px 0;
+	font-family:'Open Sans', Arial, sans-serif;
+}
+p{
+	font-size:14px;
+	color:#34495e;
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-weight:400;
+	margin-top:0;
+	margin-bottom:15px;
+}
+h1 a, h2 a, h3 a, h4 a, h6 a, a{
+	color:#1abc9c;
+}
+
+a:hover{
+	text-decoration:none;
+	color:#444;
+}
+a, a > * {
+	font-family: 'Open Sans', Arial, sans-serif;
+	text-decoration: none;
+	-webkit-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	   -moz-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	    -ms-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	     -o-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	        transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+}
+input, textarea{
+	font-family: 'Open Sans', Arial, sans-serif;
+	font-size:13px;
+	-webkit-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	   -moz-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	    -ms-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	     -o-transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+	        transition: background-color .3s ease, border .3s ease, color .3s ease, opacity .3s ease-in-out;
+}
+
+::-moz-selection { background: #e4593a; color: #000; text-shadow: none; }
+.::selection { background: #e4593a; color: #000; text-shadow: none; }
+
+.padding80{
+	padding:80px 0;
+}
+
+h1.standart-title{
+	font-size:28px;
+	font-weight:600;
+	color:#000;
+	text-align:center;
+	margin:0;
+	text-transform:uppercase;
+}
+.text-center{
+	text-align:center;
+	margin-bottom:60px;
+}
+span.border-circle{
+	border-bottom:2px solid #000;
+	width:100px;
+	display:inline-table;
+	margin-bottom:60px;
+	position:relative;
+	margin:0;
+}
+span.border-circle:after{
+	content:"";
+	border-radius:10px;
+	width:10px;
+	height:10px;
+	background:#000;
+	position:absolute;
+	margin:-4px 0 0 0;
+	right:45%;
+}
+h1.new-style{
+	font-size:20px;
+	font-weight:400;
+	color:#2c3e50;
+	text-align:center;
+}
+
+section#portfolio{
+	width:100%;
+	height:auto;
+	float:left;
+
+}
+section#portfolio h1.standart-title{
+	color:#000;
+}
+.image-wrap{
+	width:auto;
+	height:auto;
+	position:relative;
+}
+.image-wrap a img {
+    vertical-align: middle;
+    border-radius: 10px 10px 10px 10px;
+}
+.portfolio-list{
+	list-style-type:none;
+	width:auto;
+	float:left;
+	margin:0 0 0 0px;
+	padding:0;
+}
+.portfolio-list li{
+	padding:0;
+	margin:0 0 0px 28px;
+	float:left;
+}
+.portfolio-3columns .portfolio-list li{
+	width:300px;
+}
+.maskImage{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	position:absolute;
+	z-index:99999;
+	background: #000;
+	-webkit-border-radius: 10px;
+	   -moz-border-radius: 10px;
+		    border-radius: 10px;
+}
+.maskImage a{
+	width:100%;
+	height:100%;
+}
+.mask-text{
+	font-size:20px;
+	color:#fff;
+	position:absolute;
+	top:40%;
+
+}
+.maskImage a span.link{
+	background:#0088cc;
+	width:50px;
+	height:28px;
+	padding:10px 0;
+	position:absolute;
+	margin-left:48%;
+	margin-top:15%;
+	left:-24px;
+	top:0;
+	-webkit-border-radius: 10px;
+	   -moz-border-radius: 10px;
+		    border-radius: 10px;
+}
+.maskImage a span.zoom{
+	background:#0088cc;
+	width:48px;
+	height:28px;
+	padding:10px 0;
+	position:absolute;
+	margin-left:60%;
+	margin-top:15%;
+	left:-24px;
+	top:0;
+	-webkit-border-radius: 10px;
+	   -moz-border-radius: 10px;
+		    border-radius: 10px;
+}
+.maskImage a span i{
+	color:#FFF;
+	font-size:20px;
+	margin-left:11px;
+	margin-top:11px;
+}
+
+@media (max-width: 979px) {
+.maskImage{
+	display:none;
+}
+
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+
+.portfolio-list {
+	margin:0 0 0 32px;
+}
+.stunningtext h2{
+	font-size:40px;
+}
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+
+h1.standart-title{
+	font-size:22px;
+}
+.portfolio-list {
+	margin:0 0 0 40px;
+}
+.stunningtext h2{
+	font-size:24px;
+}
+
+}
+
+@media (max-width: 479px) {
+
+.stunningtext h2{
+	font-size:20px;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+    <!-- Portfolio -->
+    <section id="portfolio" class="padding80">
+        <div class="container">
+        	<h1 class="standart-title">Image Comparison</h1>
+            <p class="text-center"><span class="border-circle"></span></p>
+            <ul id="portfolio-list" class="portfolio-list">
+                <li class="item">
+                    <div class="image-wrap">
+                        <div class="maskImage">
+                            <span class="mask-text" style="left:28px">Spatial Map Comparison</span>
+                            <a href="/images/spatial/{{pk1}}/{{pk2}}"><span class="link"><i class="icon-link-1"></i></span></a>
+                            <a rel="bookmark[pp_gal]" href="{% static "images/spatialmap.png" %}""></a>
+                        </div>
+                        <a href="/images/spatial/{{pk1}}/{{pk2}}"><img src="{% static "images/spatialmap.png" %}" alt="MyPassion" width="275px" /></a>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="image-wrap">
+                        <div class="maskImage">
+                            <span class="mask-text" style="left:35px">Scatterplot Comparison</span>
+                            <a href="/images/scatterplot/{{pk1}}/{{pk2}}"><span class="link"></span></a>
+                            <a rel="bookmark[pp_gal]" href="{% static "images/scatterplot.png" %}"></a>
+                        </div>
+                        <a href="/images/scatterplot/{{pk1}}/{{pk2}}"><img src="{% static "images/scatterplot.png" %}" alt="MyPassion" width="275px" /></a>
+                    </div>
+                </li>
+                <li class="item">
+                    <div class="image-wrap">
+                        <div class="maskImage">
+                            <span class="mask-text" style="left:78px">Coming Soon</span>
+                            <a href="#"></span></a>
+                            <a rel="bookmark[pp_gal]" href="{% static "images/cognitiveatlas.png" %}"></a>
+                        </div>
+                        <a href="#"><img src="{% static "images/cognitiveatlas.png" %}" alt="MyPassion" width="275px" /></a>
+                    </div>
+                </li>
+            </ul>
+            
+        </div>
+    </section>
+    <!-- /Portfolio -->
+    
+    
+<script src="{% static "scripts/jquery-1.10.2.min.js" %}"></script>
+<script>
+
+// Portfolio Hover Effect
+
+	var currentWindowWidth = jQuery(window).width();
+	
+	jQuery('div.maskImage').css({opacity:0, top:0});
+	if(currentWindowWidth >= 979){
+		jQuery('.portfolio-item, .item, .image-wrap').mouseenter(function(e) {
+			jQuery(this).find('.maskImage').animate({ opacity:1}, 200);
+			jQuery(this).find('.maskImage a span').animate({ top:'40%'}, 200);
+		}).mouseleave(function(e) {
+			jQuery(this).find('.maskImage').animate({ opacity:0}, 200);
+			jQuery(this).find('.maskImage a span').animate({ top:-48+"px"}, 200);
+		});
+	}
+
+	
+</script>
+
+    <div style="width:90%; margin-left:42px; margin-top:30px">
+    <h5 style="color:#666">About</h5>
+    <div class="well" style="color:#666">
+    Image comparison is an important first step to understand your result in the context of those that came before it. Pairwise comparison can be done to assess spatial similarity (Spatial Map Comparison), voxelwise similarity (Scatterplot Comparison), or ontological similarity based on cognitive concepts associated with the image contrast (Ontological Similarity).</div></div>
 
 {% endblock %}
-
-

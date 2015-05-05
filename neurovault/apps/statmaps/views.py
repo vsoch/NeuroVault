@@ -700,8 +700,44 @@ def atlas_query_voxel(request):
     return JSONResponse(data)
 
 
-# Compare Two Images
+# Compare Two Images - Selection Interface
 def compare_images(request,pk1,pk2):
+    image1 = get_image(pk1,None,request)
+    image2 = get_image(pk2,None,request)
+
+    context = {"pk1":image1.pk,
+               "pk2":image2.pk}
+
+    return render(request, 'statmaps/compare_images.html', context)
+
+
+# Compare Two Images Spatially
+def spatial_compare(request,pk1,pk2):
+    image1 = get_image(pk1,None,request)
+    image2 = get_image(pk2,None,request)
+
+    # Get image: collection: [map_type] names no longer than ~125 characters
+    image1_custom_name = format_image_collection_names(image_name=image1.name,
+                                                       collection_name=image1.collection.name,
+                                                       map_type=image1.map_type,total_length=125)
+    image2_custom_name = format_image_collection_names(image_name=image2.name,
+                                                       collection_name=image2.collection.name,
+                                                       map_type=image2.map_type,total_length=125)
+
+    context = {
+        'image1': image1,
+        'image2': image2,
+        'name1': image1_custom_name,
+        'name2': image1_custom_name
+    }
+
+    template = 'statmaps/spatial_compare.html'
+    return render(request, template, context)
+
+
+
+# Compare Two Images with a Scatterplot
+def scatterplot_compare(request,pk1,pk2):
     import numpy as np
     image1 = get_image(pk1,None,request)
     image2 = get_image(pk2,None,request)
@@ -751,7 +787,7 @@ def compare_images(request,pk1,pk2):
     # Add atlas svg to the image, and prepare html for rendering
     html = [h.replace("[coronal]",atlas_svg) for h in html_snippet]
     html = [h.strip("\n").replace("[axial]","").replace("[sagittal]","") for h in html]
-    context = {'html': html}
+    context = {"html": html,"pk1":image1.pk,"pk2":image2.pk}
 
     # Determine if either image is thresholded
     threshold_status = np.array([image_names[i] for i in range(0,2) if images[i].is_thresholded])
@@ -761,7 +797,7 @@ def compare_images(request,pk1,pk2):
             warnings.append('Warning: Thresholded image: %s (%.4g%% of voxels are zeros),' %(image_names[i],images[i].perc_bad_voxels))
         context["warnings"] = warnings
 
-    return render(request, 'statmaps/compare_images.html', context)
+    return render(request, 'statmaps/scatterplot_compare.html', context)
 
 
 # Return search interface for one image vs rest
