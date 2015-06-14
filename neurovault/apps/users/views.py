@@ -33,10 +33,10 @@ def create_user(request):
                 return HttpResponseRedirect(reverse("my_profile"))
     else:
         form = UserCreateForm(instance=User())
-        
+
     context = {"form": form,
                "request": request}
-    return render(request, "registration/edit_user.html", context)
+    return render(request, "registration/signup.html", context)
 
 @login_required
 def edit_user(request):
@@ -48,7 +48,7 @@ def edit_user(request):
     return render_to_response("registration/edit_user.html",
                              {'form':edit_form},
                              context_instance=RequestContext(request))
-    
+
 # def login(request):
 #     return render_to_response('home.html', {
 #         'plus_id': getattr(settings, 'SOCIAL_AUTH_GOOGLE_PLUS_KEY', None)
