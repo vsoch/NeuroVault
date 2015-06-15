@@ -283,3 +283,8 @@ ul.collection_nav li {
     margin-top: 8px;
 }
 
+/* Modal custom styling */
+.modal-header {
+   background: #337ab7;
+   color: white;
+}
