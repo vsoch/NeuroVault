@@ -214,7 +214,7 @@ ul.collection_nav li {
 
 .auth-wrapper {
     max-width: 320px;
-    margin: 0 auto 100px auto;
+    margin: 38px auto 60px auto;
 }
 .login-or {
     position: relative;
@@ -240,6 +240,7 @@ ul.collection_nav li {
     height: 1px;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
+    border-top: 0px !important;
 }
 .auth-wrapper h3 {
     text-align: center;
@@ -281,10 +282,4 @@ ul.collection_nav li {
 }
 .social-buttons .btn-block + .btn-block {
     margin-top: 8px;
-}
-
-/* Modal custom styling */
-.modal-header {
-   background: #337ab7;
-   color: white;
 }

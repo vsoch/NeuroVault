@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="auth-wrapper">
 
     <form role="form" method="post" action="{% url 'login' %}" style="padding-top:80px">
@@ -42,4 +43,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 </div>
+=======
+    {% include 'registration/_login.html' %}
+>>>>>>> 9eb7277b034f0bcdededdf5e636d29cb94c4ac1f
 {% endblock %}
