@@ -283,6 +283,15 @@ def view_image(request, pk, collection_cid=None):
             context['warning'] = "Warning: This map seems to be thresholded, sparse or acquired with limited field of view (%.4g%% of voxels are zeros). "%image.perc_bad_voxels
             context['warning'] += "Some of the NeuroVault functions such as decoding might not work properly. "
             context['warning'] += "Please use unthresholded maps whenever possible."
+        
+        # If defined with Cognitive Atlas tag, show tree
+        if image.cognitive_paradigm_cogatlas_id:
+            from cognitiveatlas.datastructure import concept_node_triples
+            from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_ontology_tree_d3
+            image_dict = {image.cognitive_paradigm_cogatlas_id:[image.pk]}
+            triples = concept_node_triples(image_dict=image_dict,save_to_file=False)
+            tree = named_ontology_tree_from_tsv(triples,output_json=None)
+            context["cognitive_atlas_tree"] = make_ontology_tree_d3(tree)
 
         template = 'statmaps/statisticmap_details.html.haml'
     return render(request, template, context)

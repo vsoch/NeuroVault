@@ -116,6 +116,9 @@
                 %a{href:'#papaya_viewer', data-toggle:'tab'} Papaya viewer
             %li
                 %a{href:'#details', data-toggle:'tab'} Details
+            - if cognitive_atlas_tree
+                %li
+                    %a{href:'#cogatlas', data-toggle:'tab'} Cognitive Atlas
             %li
                 %a{href:'#embed', data-toggle:'tab'} Embed
 
@@ -129,6 +132,8 @@
                             %th Field
                             %th Value
                     %tbody
+            #cogatlas.tab-pane
+                {{ cognitive_atlas_tree }}
             #embed.tab-pane
                 <div class="well">
                     <h5>Copy and paste this snippet to embed this map into your website or blog:</h5>
