@@ -14,7 +14,7 @@ from .views import edit_collection, edit_images, view_image, delete_image, edit_
                 papaya_js_embed, view_images_by_tag, \
                 view_image_with_pycortex, stats_view, serve_nidm, serve_nidm_image, \
                 view_nidm_results, find_similar, compare_images,  edit_metadata, \
-                export_images_filenames, delete_nidm_results
+                export_images_filenames, delete_nidm_results, view_cognitiveatlas
 
 urlpatterns = patterns('',
     url(r'^my_collections/$',
@@ -152,7 +152,12 @@ urlpatterns = patterns('',
         name='compare_images'),
     url(r'^images/(?P<pk>\d+)/find_similar$',
         find_similar,
-        name='find_similar')
+        name='find_similar'),
+
+   # Cognitive Atlas
+    url(r'^cogat$',
+        view_cognitiveatlas,
+        name='view_cognitiveatlas')
 
 )
 

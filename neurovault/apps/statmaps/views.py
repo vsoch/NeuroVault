@@ -284,17 +284,35 @@ def view_image(request, pk, collection_cid=None):
             context['warning'] += "Some of the NeuroVault functions such as decoding might not work properly. "
             context['warning'] += "Please use unthresholded maps whenever possible."
         
-        # If defined with Cognitive Atlas tag, show tree
-        if image.cognitive_paradigm_cogatlas_id:
-            from cognitiveatlas.datastructure import concept_node_triples
-            from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_ontology_tree_d3
-            image_dict = {image.cognitive_paradigm_cogatlas_id:[image.pk]}
-            triples = concept_node_triples(image_dict=image_dict,save_to_file=False)
-            tree = named_ontology_tree_from_tsv(triples,output_json=None)
-            context["cognitive_atlas_tree"] = make_ontology_tree_d3(tree)
-
         template = 'statmaps/statisticmap_details.html.haml'
     return render(request, template, context)
+
+
+def view_cognitiveatlas(request):
+
+    # Get all contrasts defined for Cognitive Atlas
+    contrast_defined_images = [i for i in Image.objects.all() if i.cognitive_contrast_cogatlas_id!=None]
+    unique_contrasts = np.unique([i.cognitive_contrast_cogatlas_id for i in contrast_defined_images]).tolist()
+
+    # Get all concepts
+    concepts = get_concepts()
+
+    # Make image/contrast lookup
+    image_lookup = dict()
+    for u in unique_contrasts:
+        image_lookup[u] = [c.pk for c in contrast_defined_images if c.cognitive_contrast_cogatlas_id==u]
+
+    context = dict()
+    try:
+        from cognitiveatlas.datastructure import concept_node_triples
+        from pybraincompare.ontology.tree import named_ontology_tree_from_tsv, make_ontology_tree_d3
+        triples = concept_node_triples(image_dict=image_lookup,save_to_file=False)
+        tree = named_ontology_tree_from_tsv(triples,output_json=None)
+        context["cognitive_atlas_tree"] = make_ontology_tree_d3(tree)
+    except:
+        context["cognitive_atlas_tree"] = "<h2>Cognitive Atlas Currently Not Available</h2>"
+    
+    return render(request, 'statmaps/cognitive_atlas.html', context)
 
 
 def view_collection(request, cid):
