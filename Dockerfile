@@ -21,6 +21,7 @@ RUN pip install django-cleanup==0.4.2
 RUN pip install django-coffeescript
 RUN pip install django-crispy-forms
 RUN pip install django-datatables-view
+RUN pip install django-mailgun
 RUN pip install 'django-dbbackup<2.3'
 RUN pip install django-dirtyfields
 RUN pip install django-file-resubmit==0.4.3
